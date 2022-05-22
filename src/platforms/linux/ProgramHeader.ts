@@ -23,11 +23,12 @@ class ProgramHeader {
     const h = this.data;
 
     return Buffer.from(
-      hex`${half(hex`${h.type}`)!} ${half(hex`${'00'}`)!} ${word('00')!} ${word(
-        hex`${h.vAddress}`
-      )!} ${word(hex`${h.pAddress}`)!} ${word(hex`90`)!} ${word(
+      hex`${half(hex`${h.type}`)!} ${half(hex`${'000000000401000'}`)!} ${word(
+        '00'
+      )!} ${word(hex`${h.vAddress}`)!} ${word(hex`${h.pAddress}`)!} ${word(
         hex`90`
-      )!} ${word(hex`00`)!}`
+      )!} ${word(hex`90`)!} ${word(hex`00`)!}`,
+      'hex'
     );
   }
 }

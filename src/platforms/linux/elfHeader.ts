@@ -40,10 +40,10 @@ export function createHeader(h: ELFHeader) {
     hex`${h.eEntry}`.padStart(8, '0')
   )!} ${word(hex`${h.ePHOffset}`)!}`;
 
-  const row3 = hex`${word(hex`${h.eSHOffset}`)!} ${half('00')!} ${quarter(
+  const row3 = hex`${word(hex`00`)!} ${half('00')!} ${quarter(
     hex`${h.eEhSize}`
   )!} ${quarter(hex`${h.ePHEntSize}`)!} ${quarter(hex`${h.ePHNum}`)!} ${quarter(
-    hex`${h.eSHEntSize}`
+    hex`${'00'}`
   )!}`;
 
   const row4 = hex`${quarter(hex`${h.eSHNum}`)!} ${quarter(

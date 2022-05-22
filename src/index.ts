@@ -1,4 +1,5 @@
 import ProgramHeader from '@platforms/linux/ProgramHeader';
+import { hex } from '@utils/hex';
 import { half } from '@utils/size';
 import { open, writeFile } from 'fs/promises';
 import {
@@ -20,7 +21,7 @@ const header = createHeader({
   ePHOffset: 0x40,
   eSHOffset: 0xb0,
   eFlags: 0,
-  eEhSize: 0x34,
+  eEhSize: 64,
   ePHEntSize: 0x38,
   ePHNum: 1,
   eSHEntSize: 0x40,
@@ -30,17 +31,23 @@ const header = createHeader({
 
 const programHeader = new ProgramHeader({
   type: 0x00000001,
-  flags: 0,
+  flags: 5,
   offset: '0',
   vAddress: '08000000',
   pAddress: '08000000',
-  fileSize: 0x90,
-  memSize: 0x90,
+  fileSize: 12,
+  memSize: 12,
   align: '0',
 }).toBytes();
 
-async function run() {
-  const buffer = Buffer.concat([header, programHeader]);
-
-  writeFile('test.txt', buffer);
+function createAssembly() {
+  return Buffer.from(hex`b8 3c 00 00 00 bf 00 00 00 00 0f 05`, 'hex');
 }
+
+async function run() {
+  const buffer = Buffer.concat([header, programHeader, createAssembly()]);
+
+  await writeFile('test.txt', buffer);
+}
+
+run();
