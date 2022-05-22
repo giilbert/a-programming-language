@@ -1,5 +1,5 @@
 import { hex } from '@utils/hex';
-import { half, quarter } from '@utils/size';
+import { half, quarter, word } from '@utils/size';
 
 interface ELFHeader {
   // identification
@@ -36,11 +36,11 @@ export function createHeader(h: ELFHeader) {
 
   const row2 = hex`${quarter(hex`${h.eType}`)!} ${quarter(
     hex`${h.eMachine}`
-  )!} ${half(hex`${h.eVersion!}`)!} ${half(
+  )!} ${half(hex`${h.eVersion!}`)!} ${word(
     hex`${h.eEntry}`.padStart(8, '0')
-  )!} ${half(hex`${h.ePHOffset}`)!}`;
+  )!} ${word(hex`${h.ePHOffset}`)!}`;
 
-  const row3 = hex`${half(hex`${h.eSHOffset}`)!} ${half('00')!} ${quarter(
+  const row3 = hex`${word(hex`${h.eSHOffset}`)!} ${half('00')!} ${quarter(
     hex`${h.eEhSize}`
   )!} ${quarter(hex`${h.ePHEntSize}`)!} ${quarter(hex`${h.ePHNum}`)!} ${quarter(
     hex`${h.eSHEntSize}`
